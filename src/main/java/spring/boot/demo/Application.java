@@ -2,17 +2,17 @@ package spring.boot.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-@RestController
 @SpringBootApplication
-public class Application {
-
-    @RequestMapping("/")
-    public String hello() {
-        return "hello world";
-    }
+public class Application extends WebMvcConfigurerAdapter{
+    
+    @Override
+    //重写这个方法的目的: 是否采用扩展名的方式确定内容格式 ->不采用，默认是采用
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+         configurer.favorPathExtension(false);
+     }
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
